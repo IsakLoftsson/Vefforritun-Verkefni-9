@@ -7,7 +7,20 @@ import { renderDetails, renderFrontpage, searchAndRender } from './lib/ui.js';
  * @returns {Promise<void>}
  */
 async function onSearch(e) {
-  /* TODO útfæra */
+  e.preventDefault();
+  console.log('onSearch, e:', e);
+
+  if (!e.target) {
+    return;
+  }
+  const query = e.target.querySelector('input').value;
+  console.log('query:', query);
+
+  searchAndRender(document.body, e.target, query);
+
+  // refreshar browser??
+  //window.location.search = query;
+
 }
 
 /**
@@ -18,14 +31,26 @@ async function onSearch(e) {
 function route() {
   const { search } = window.location;
   const qs = new URLSearchParams(search);
+
   const id = qs.get('id');
-  const query = qs.get('query');
-  console.log(id, query);
+  const query = qs.get('query') ?? undefined;
+  console.log('id:', id, 'query:', query);
+
+  const parentElement = document.body;
+  console.log('parentElement:', parentElement);
+
+  if (id) {
+    renderDetails(parentElement, id);
+  } else {
+    renderFrontpage(parentElement, onSearch, query);
+    // hægt að gera svona líka:
+    // renderFrontpage(document.querySelector('nafn á elementi í HTML'), onSearch, query);
+  }
 }
 
 // Bregst við því þegar við notum vafra til að fara til baka eða áfram.
 window.onpopstate = () => {
-  route(); // ?????????????
+  // route(); // ?????????????
 };
 
 // Athugum í byrjun hvað eigi að birta.
