@@ -10,17 +10,19 @@ async function onSearch(e) {
   e.preventDefault();
   console.log('onSearch, e:', e);
 
-  if (!e.target) {
+  if (!e.target || !(e.target instanceof Element)) {
     return;
   }
-  const query = e.target.querySelector('input').value;
-  console.log('query:', query);
 
-  searchAndRender(document.body, e.target, query);
+  const { value } = e.target.querySelector('input') ?? {};
+  console.log('value:', value);
 
-  // refreshar browser??
-  //window.location.search = query;
+  if (!value) {
+    return;
+  }
 
+  await searchAndRender(document.body, e.target, value);
+  window.history.pushState({}, '', `/?query=${value}`);
 }
 
 /**
