@@ -99,24 +99,6 @@ function createSearchResults(results, query) {
  * @param {string} query Leitarstrengur.
  */
 export async function searchAndRender(parentElement, searchForm, query) {
-  /* 
-  parentElement.appendChild(el('p', {}, `Leita að ${query}`));
-
- const buttonElement = searchForm.querySelector('button');
- if (buttonElement) {
-   buttonElement.setAttribute('disabled', 'disabled');
-  }
-
-  const results = await searchLaunches(query);
-  console.log('results:', results);
-
-  if (buttonElement) {
-    buttonElement.setAttribute('disabled', '');
-  }
-
-  const searchResultsElement = createSearchResults(results, query);
-  parentElement.appendChild(searchResultsElement);
-  */
   const mainElement = parentElement.querySelector('main');
 
   if (!mainElement) {

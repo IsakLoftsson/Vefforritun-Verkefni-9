@@ -38,11 +38,32 @@ export async function searchLaunches(query) {
   url.searchParams.set('mode', 'list');
   console.log('url:', url);
 
-  const response = await fetch(url);
-  console.log('response:', response);
+  let response;
+  try {
+    response = await fetch(url);
+    console.log('response:', response);
+  } catch (e) {
+    console.error('Villa kom upp við að sækja gögn');
+    return null;
+  }
 
-  const json = await response.json();
-  console.log('json:', json);
+  if (!response.ok) {
+    console.error(
+      'Villa við að sækja gögn, ekki 200 staða',
+      response.status,
+      response.statusText
+    );
+    return null;
+  }
+
+  let json;
+  try {
+    json = await response.json();
+    console.log('json:', json);
+  } catch (e) {
+    console.error('Villa við að vinna úr JSON');
+    return null;
+  }
 
   return json.results;
 }
