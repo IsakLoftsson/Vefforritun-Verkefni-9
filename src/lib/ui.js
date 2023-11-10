@@ -9,7 +9,7 @@ import { el } from './elements.js';
  */
 export function renderSearchForm(searchHandler, query = undefined) {
   // const form = el('form', {}, el('input', { type: 'text', name: 'query', value: query ?? '' }), el('button', {}, 'Leita'));
-  const form = el('form', {}, el('input', {value: query ?? '' }), el('button', {}, 'Leita'));
+  const form = el('form', {}, el('input' , {value: query ?? '', placeholder: 'Leitarorð' }), el('button', {}, 'Leita'));
   form.addEventListener('submit', searchHandler);
   return form;
 }
@@ -68,6 +68,7 @@ function setNotLoading(parentElement, searchForm = undefined) {
  */
 function createSearchResults(results, query) {
   const list = el('ul', {class : 'results'});
+  list.appendChild(el('h2', { class: 'results__title' }, `Leitarniðurstöður fyrir: "${query}"`));
 
   if (!results) {
     const noResultElement = el('li', {}, `Villa við leit að ${query}`);
@@ -83,8 +84,8 @@ function createSearchResults(results, query) {
 
   for (const result of results) {
     const resultElement = el('li',{class: 'result'}, 
-      el('span', {class: 'name'}, result.name),
-      el('span', {class: 'mission'}, result.mission),
+      el('span', {class: 'name' }, el('a',{href: `/?id=${result.id}`}, result.name)),
+      el('span', {class: 'mission'}, el('h3',{},'Geimferð: '), result.mission),
     );
     list.appendChild(resultElement);
   }
