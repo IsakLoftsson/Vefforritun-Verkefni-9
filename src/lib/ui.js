@@ -160,13 +160,42 @@ export async function renderDetails(parentElement, id) {
 
   parentElement.appendChild(container);
 
-  /* TODO setja loading state og sækja gögn */
+  /* Setja loading state og sækja gögn */
+  //setLoading(parentElement, searchForm);
+  const result = await getLaunch(id);
+  //setNotLoading(parentElement, searchForm);
 
   // Tómt og villu state, við gerum ekki greinarmun á þessu tvennu, ef við
   // myndum vilja gera það þyrftum við að skilgreina stöðu fyrir niðurstöðu
   if (!result) {
-    /* TODO útfæra villu og tómt state */
+    parentElement.appendChild(el('p', {}, 'Ekkert geimskot fannst.'));
+    return;
   }
 
-  /* TODO útfæra ef gögn */
+  /* Útfæra ef gögn */
+  parentElement.appendChild(createLaunch(result));
+
+}
+
+/**
+ * Útbýr element fyrir öll gögn um bók. Birtir titil fyrir þau gögn sem eru til
+ * staðar (ekki tóm fylki) og birtir þau.
+ * @param {object} launch Gögn fyrir bók sem á að birta.
+ * @returns Element sem inniheldur öll gögn um bók.
+ */
+export function createLaunch(launch) {
+  const launchEl = el('div', { class: 'launch-site' }, el('h1', { class: 'launch-title' }, launch.name));
+  launchEl.appendChild(el('p', { class: 'window-start' }, `Gluggi opnast: ${launch.window_start}`));
+  launchEl.appendChild(el('p', { class: 'window-end' }, `Gluggi lokast: ${launch.window_end}`));
+  launchEl.appendChild(el('h2', { class: 'status' }, `Staða: ${launch.status_name}`));
+  launchEl.appendChild(el('p', { class: 'status-description' }, launch.status_description));
+  launchEl.appendChild(el('h2', { class: 'mission' }, `Geimferð: ${launch.mission_name}`));
+  launchEl.appendChild(el('p', { class: 'mission-description' }, launch.mission_description));
+
+
+  if (launch.image) {
+    launchEl.appendChild(el('img', { class: 'launch-image', src: launch.image }));
+  }
+
+  return launchEl;
 }

@@ -36,10 +36,8 @@ function route() {
 
   const id = qs.get('id');
   const query = qs.get('query') ?? undefined;
-  console.log('id:', id, 'query:', query);
 
   const parentElement = document.body;
-  console.log('parentElement:', parentElement);
 
   if (id) {
     renderDetails(parentElement, id);
