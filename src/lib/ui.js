@@ -9,7 +9,9 @@ import { el } from './elements.js';
  */
 export function renderSearchForm(searchHandler, query = undefined) {
   // const form = el('form', {}, el('input', { type: 'text', name: 'query', value: query ?? '' }), el('button', {}, 'Leita'));
-  const form = el('form', {}, el('input' , {value: query ?? '', placeholder: 'Leitarorð' }), el('button', {}, 'Leita'));
+  const form = el('form', {}, 
+    el('input' , {value: query ?? '', placeholder: 'Leitarorð' }), 
+    el('button', {}, 'Leita'));
   form.addEventListener('submit', searchHandler);
   return form;
 }
@@ -145,6 +147,32 @@ export function renderFrontpage(
   searchAndRender(parentElement, searchForm, query);
 }
 
+
+/**
+ * Útbýr element fyrir öll gögn um bók. Birtir titil fyrir þau gögn sem eru til
+ * staðar (ekki tóm fylki) og birtir þau.
+ * @param {object} launch Gögn fyrir bók sem á að birta.
+ * @returns Element sem inniheldur öll gögn um bók.
+ */
+export function createLaunch(launch) {
+  const launchEl = el('div', { class: 'launch-site' }, 
+    el('h1', { class: 'launch-title' }, launch.name));
+  launchEl.appendChild(el('p', { class: 'window-start' }, `Gluggi opnast: ${launch.window_start}`));
+  launchEl.appendChild(el('p', { class: 'window-end' }, `Gluggi lokast: ${launch.window_end}`));
+  launchEl.appendChild(el('h2', { class: 'status' }, `Staða: ${launch.status_name}`));
+  launchEl.appendChild(el('p', { class: 'status-description' }, launch.status_description));
+  launchEl.appendChild(el('h2', { class: 'mission-name' }, `Geimferð: ${launch.mission_name}`));
+  launchEl.appendChild(el('p', { class: 'mission-description' }, launch.mission_description));
+
+  if (launch.image) {
+    launchEl.appendChild(el('img', { class: 'launch-image', src: launch.image }));
+  }
+
+  launchEl.appendChild(el('p', { class: 'go-back' }, el('a', { href: '/' }, 'Til baka')));
+
+  return launchEl;
+}
+
 /**
  * Sýna geimskot.
  * @param {HTMLElement} parentElement Element sem á að innihalda geimskot.
@@ -152,11 +180,6 @@ export function renderFrontpage(
  */
 export async function renderDetails(parentElement, id) {
   const container = el('main', {});
-  const backElement = el(
-    'div',
-    { class: 'back' },
-    el('a', { href: '/' }, 'Til baka'),
-  );
 
   parentElement.appendChild(container);
 
@@ -175,28 +198,4 @@ export async function renderDetails(parentElement, id) {
   /* Útfæra ef gögn */
   parentElement.appendChild(createLaunch(result));
 
-}
-
-/**
- * Útbýr element fyrir öll gögn um bók. Birtir titil fyrir þau gögn sem eru til
- * staðar (ekki tóm fylki) og birtir þau.
- * @param {object} launch Gögn fyrir bók sem á að birta.
- * @returns Element sem inniheldur öll gögn um bók.
- */
-export function createLaunch(launch) {
-  const launchEl = el('div', { class: 'launch-site' }, el('h1', { class: 'launch-title' }, launch.name));
-  launchEl.appendChild(el('p', { class: 'window-start' }, `Gluggi opnast: ${launch.window_start}`));
-  launchEl.appendChild(el('p', { class: 'window-end' }, `Gluggi lokast: ${launch.window_end}`));
-  launchEl.appendChild(el('h2', { class: 'status' }, `Staða: ${launch.status_name}`));
-  launchEl.appendChild(el('p', { class: 'status-description' }, launch.status_description));
-  launchEl.appendChild(el('h2', { class: 'mission-name' }, `Geimferð: ${launch.mission_name}`));
-  launchEl.appendChild(el('p', { class: 'mission-description' }, launch.mission_description));
-
-  if (launch.image) {
-    launchEl.appendChild(el('img', { class: 'launch-image', src: launch.image }));
-  }
-
-  launchEl.appendChild(el('p', { class: 'go-back' }, el('a', { href: '/' }, 'Til baka')));
-
-  return launchEl;
 }
