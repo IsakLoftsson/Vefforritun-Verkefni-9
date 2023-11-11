@@ -163,7 +163,7 @@ export async function renderDetails(parentElement, id) {
   /* Setja loading state og sækja gögn */
   //setLoading(parentElement, searchForm);
   const result = await getLaunch(id);
-  //setNotLoading(parentElement, searchForm);
+  // setNotLoading(parentElement, searchForm);
 
   // Tómt og villu state, við gerum ekki greinarmun á þessu tvennu, ef við
   // myndum vilja gera það þyrftum við að skilgreina stöðu fyrir niðurstöðu
@@ -189,13 +189,14 @@ export function createLaunch(launch) {
   launchEl.appendChild(el('p', { class: 'window-end' }, `Gluggi lokast: ${launch.window_end}`));
   launchEl.appendChild(el('h2', { class: 'status' }, `Staða: ${launch.status_name}`));
   launchEl.appendChild(el('p', { class: 'status-description' }, launch.status_description));
-  launchEl.appendChild(el('h2', { class: 'mission' }, `Geimferð: ${launch.mission_name}`));
+  launchEl.appendChild(el('h2', { class: 'mission-name' }, `Geimferð: ${launch.mission_name}`));
   launchEl.appendChild(el('p', { class: 'mission-description' }, launch.mission_description));
-
 
   if (launch.image) {
     launchEl.appendChild(el('img', { class: 'launch-image', src: launch.image }));
   }
+
+  launchEl.appendChild(el('p', { class: 'go-back' }, el('a', { href: '/' }, 'Til baka')));
 
   return launchEl;
 }

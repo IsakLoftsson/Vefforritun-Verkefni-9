@@ -45,14 +45,14 @@ button {
 }
 
 h1 {
-  font-size: 3rem;
+  font-size: 2.5rem;
   margin-block-end: var(--spacing);
   font-weight: 800;
 }
 
 h2 {
   padding-top: var(--spacing);
-  font-size: 2rem;
+  font-size: 1.7rem;
   font-weight: 700;
 }
 
@@ -60,9 +60,8 @@ main {
   display: flex;
   flex-direction: column;
   gap: var(--spacing);
-
+  width: 50%;
   margin: var(--spacing) auto;
-  padding-inline: var(--spacing);
   max-width: var(--max-width);
 }
 
@@ -79,7 +78,6 @@ button {
 
 body {
   gap: var(--spacing);
-  /* make first child bein the middle of screen */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -90,13 +88,23 @@ body {
   flex-direction: column;
   gap: var(--spacing);
   list-style: none;
-  padding-right: 20%;
+  position: relative;
+  right: 20%;
 }
 
 .results li {
-  display: flex;
-  flex-direction: column;
   padding-top: var(--spacing);
+}
+
+.mission {
+  display: flex;
+  flex-direction: row;
+  font-size: 17px;
+}
+
+.mission h3 {
+  padding-right: calc(var(--spacing)/2);
+  font-size: 17px;
 }
 
 .launch-title{
@@ -108,7 +116,6 @@ body {
   display: flex;
   flex-direction: column;
   width: 50%;
-  /* align-items: center; */
 }
 
 .launch-image {
@@ -116,6 +123,15 @@ body {
 }
 
 p {
-  font-size: 22px;
-  font-weight: 500;
+  font-size: 17px;
 }
+
+.go-back {
+  padding-top: var(--spacing);
+  padding-bottom: calc(var(--spacing)*3);
+}
+
+a {
+  font-size: 17px;
+}
+
