@@ -161,9 +161,9 @@ export async function renderDetails(parentElement, id) {
   parentElement.appendChild(container);
 
   /* Setja loading state og sækja gögn */
-  //setLoading(parentElement, searchForm);
+  setLoading(parentElement);
   const result = await getLaunch(id);
-  // setNotLoading(parentElement, searchForm);
+  setNotLoading(parentElement);
 
   // Tómt og villu state, við gerum ekki greinarmun á þessu tvennu, ef við
   // myndum vilja gera það þyrftum við að skilgreina stöðu fyrir niðurstöðu
